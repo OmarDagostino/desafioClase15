@@ -1,0 +1,74 @@
+<table>
+    <thead>
+        <tr>
+            <th>Identificador</th>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Código</th>
+            <th>Existencias</th>
+        </tr>
+    </thead>
+    <tbody id="productTableBody"></tbody>
+</table>
+
+<script src="socket.io/socket.io.js"> </script>
+
+<style>
+     table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+ th, td {
+        border: 1px solid #dddddd;
+        text-align: center; 
+        vertical-align: middle; 
+        padding: 8px;
+    }
+</style>
+
+<script>
+   const socket = io ();
+    const productTableBody = document.getElementById("productTableBody");
+
+    const renderProductRow = (product) => {
+        return `
+            <tr>
+                <td>${product.id}</td>
+                <td>${product.title}</td>
+                <td>${product.description}</td>
+                <td>${product.price}</td>
+                <td>${product.code}</td>
+                <td>${product.stock}</td>
+            </tr>
+        `;
+    };
+
+    socket.on('productCreated', (updatedProducts) => {
+        productTableBody.innerHTML = ''; // Limpiar el cuerpo de la tabla antes de agregar filas
+
+        updatedProducts.forEach(product => {
+            const productRow = document.createElement('tr');
+            productRow.innerHTML = renderProductRow(product);
+            productTableBody.appendChild(productRow);
+        });
+    });
+
+    socket.on('productDeleted', (updatedProducts) => {
+        productTableBody.innerHTML = ''; // Limpiar el cuerpo de la tabla antes de agregar filas
+
+        updatedProducts.forEach(product => {
+            const productRow = document.createElement('tr');
+            productRow.innerHTML = renderProductRow(product);
+            productTableBody.appendChild(productRow);
+        });
+    });
+</script>

@@ -1,0 +1,51 @@
+<style>
+     table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+ th, td {
+        border: 1px solid #dddddd;
+        text-align: center; 
+        vertical-align: middle; 
+        padding: 8px;
+    }
+</style>
+
+
+<div>
+    <h2>
+        Listado de productos disponibles
+    </h2>
+    <table>
+        <thead>
+            <tr>
+            <th>identificador</th>
+            <th>titulo</th>
+            <th>descripción</th>
+            <th>precio</th>
+            <th>codigo</th>
+            <th>existencias</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each products}}
+            <tr>
+            <td>{{id}}</td>
+            <td>{{title}}</td>
+            <td>{{description}}</td>
+            <td>{{price}}</td>
+            <td>{{code}}</td>
+            <td>{{stock}}</td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
