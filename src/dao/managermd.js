@@ -41,7 +41,7 @@ router.post('/carts/:cid/product/:pid', async (req, res) => {
     }
 
     // Añadir el producto al carrito
-    const existingProduct = cart.products.find((p) => p.productId === productId);
+    const existingProduct = cart.products.find((p) => p.productId == productId);
 
     if (existingProduct) {
       existingProduct.quantity += quantity;
@@ -87,15 +87,12 @@ router.post('/carts/product/:pid', async (req, res) => {
         cartId: nextcartId, 
         products: [{ productId, quantity }]
       });
-      console.log (newCart.cartId)
-      console.log (newCart.products[0])
-      console.log (newCart._id)
+     
       await newCart.save();
   
       res.status(201).json(newCart);
     } catch (error) {
       // Manejo adecuado de errores
-     console.log (error)
       res.status(500).send('***Error en el servidor');
     }
   });
@@ -244,11 +241,11 @@ router.delete('/products/:pid', async (req, res) => {
       return;
     }
 
-    await Product.deleteOne({ productId }).exec();
-
-    res.status(200).send(`Producto con ID ${productId} eliminado`);
+    await product.deleteOne({ productId })
+    res.status(200).send(`Producto con ID ${productId} eliminado`)
   } catch (error) {
-    res.status(500).send('Error en el servidor');
+    console.error(error)
+    res.status(500).send('Error en el servidor')
   }
 });
 
