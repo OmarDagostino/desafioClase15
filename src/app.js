@@ -86,9 +86,11 @@ socket.on('nuevoMensaje', mensaje =>{
 socket.on ('disconnect', () =>{
 console.log (`se desconecto el cliente con id ${socket.id} `);
 let indice = usuarios.findIndex(usuario=> usuario.id === socket.id);
+if (indice>=0) {
 let emaildesconectado = usuarios[indice].usuario;
 socket.broadcast.emit ('desconeccion', emaildesconectado);
 usuarios.splice(indice,1);
+}
 }) 
 
 });
